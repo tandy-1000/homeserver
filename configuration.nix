@@ -5,12 +5,26 @@
 
   imports = [
     <nixpkgs/nixos/modules/installer/sd-card/sd-image-aarch64.nix>
-    ./modules/network.nix
-    ./modules/packages.nix
-    ./modules/rkmpp.nix
   ];
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  networking.hostName = "server";
+
+  networking.firewall.enable = true;
+
+  nixpkgs.overlays = [
+    (import ./packages)
+    (import ./overlays/ffmpeg-rkmpp.nix)
+  ];
+
+  environment.systemPackages = [ pkgs.ffmpeg-full ];
+
+  services.udev.extraRules = ''
+  KERNEL=="mali", MODE="0660", GROUP="video"
+  KERNEL=="rkvdec", MODE="0660", GROUP="video"
+  KERNEL=="vpu-service", MODE="0660", GROUP="video"
+  '';
 
   users.users.tandy = {
     isNormalUser = true;
