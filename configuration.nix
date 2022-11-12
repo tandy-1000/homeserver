@@ -5,9 +5,6 @@
 
   imports = [
     <nixpkgs/nixos/modules/installer/sd-card/sd-image-aarch64.nix>
-  ];
-
-  include = [
     ./modules/network.nix
     ./modules/packages.nix
     ./modules/rkmpp.nix
