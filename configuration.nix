@@ -8,8 +8,8 @@
   ];
 
   include = [
-    ./modules/network.nix,
-    ./modules/packages.nix,
+    ./modules/network.nix
+    ./modules/packages.nix
     ./modules/rkmpp.nix
   ];
 
